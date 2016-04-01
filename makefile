@@ -9,7 +9,12 @@ CPPEXAMPLES := $(SOURCES3:%.cc=%)
 DESTDIR      = /
 PREFIX       = usr
 INCLUDEDIR   = $(PREFIX)/include/
-LIBDIR       = $(PREFIX)/lib/
+MACHINE     := $(shell uname -m)
+ifeq ($(MACHINE), x86_64)
+LIBDIR       = $(PREFIX)/lib64
+else
+LIBDIR       = $(PREFIX)/lib
+endif
 PKGCONFIGDIR = $(LIBDIR)/pkgconfig/
 
 VERSION      = $(shell cat beanstalk.h | grep BS_.*_VERSION | sed 's/^.*VERSION *//' | xargs echo | sed 's/ /./g')
